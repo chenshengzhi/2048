@@ -50,6 +50,17 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 }
 
 
++ (instancetype)manager
+{
+    static M2GameManager *manager;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [[M2GameManager alloc] init];
+    });
+    return manager;
+}
+
+
 # pragma mark - Setup
 
 - (void)startNewSessionWithScene:(M2Scene *)scene
@@ -276,6 +287,50 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
   
   // Nothing is found.
   return NO;
+}
+
+
+
+#pragma mark - archives -
+
+- (BOOL)saveCurrentState
+{
+    M2StateModel *model = [[M2StateModel alloc] init];
+    model.gameType = GSTATE.gameType;
+    model.dimension = GSTATE.dimension;
+    model.score = _score;
+    model.grids = [_grid dataForArchive];
+    model.date = [[NSDate alloc] init];
+    
+    return [model archive];
+}
+
+- (BOOL)loadFromArchive:(M2StateModel *)model
+{
+    [Settings setInteger:model.gameType forKey:@"Game Type"];
+    [Settings setInteger:model.dimension-3 forKey:@"Board Size"];
+    [GSTATE loadGlobalState];
+    [_grid.scene.controller updateState];
+    _score = model.score;
+    _pendingScore = 0;
+    [_grid.scene.controller updateScore:_score];
+    
+    [_grid removeAllTilesAnimated:YES];
+    
+    [model.grids enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+        NSArray *components = [obj componentsSeparatedByString:@"-"];
+        if (components.count == 3) {
+            NSInteger x = [components[0] integerValue];
+            NSInteger y = [components[1] integerValue];
+            NSInteger level = [components[2] integerValue];
+            
+            [_grid insertTileAtPosision:M2PositionMake(x, y) level:level];
+        }
+    }];
+    
+    SKView *skView = (SKView *)_grid.scene.controller.view;
+    skView.paused = NO;
+    return YES;
 }
 
 @end

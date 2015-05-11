@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "M2StateModel.h"
 
 @class M2Scene;
 @class M2Grid;
@@ -19,6 +20,8 @@ typedef NS_ENUM(NSInteger, M2Direction) {
 };
 
 @interface M2GameManager : NSObject
+
++ (instancetype)manager;
 
 /**
  * Starts a new session with the provided scene.
@@ -34,5 +37,14 @@ typedef NS_ENUM(NSInteger, M2Direction) {
  * @param direction The direction of the move (up, right, down, left).
  */
 - (void)moveToDirection:(M2Direction)direction;
+
+
+
+#pragma mark - archives -
+
+- (BOOL)saveCurrentState;
+
+- (BOOL)loadFromArchive:(M2StateModel *)model;
+
 
 @end

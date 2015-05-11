@@ -81,4 +81,11 @@ typedef void (^IteratorBlock)(M2Position);
  */
 - (void)removeAllTilesAnimated:(BOOL)animated;
 
+
+#pragma mark - archives -
+
+- (NSArray *)dataForArchive;
+
+- (void)insertTileAtPosision:(M2Position)posision level:(NSInteger)level;
+
 @end

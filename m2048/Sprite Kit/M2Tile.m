@@ -41,6 +41,18 @@ typedef void (^M2Block)();
   return tile;
 }
 
++ (M2Tile *)insertNewTileToCell:(M2Cell *)cell level:(NSInteger)level
+{
+    M2Tile *tile = [[M2Tile alloc] init];
+    CGPoint origin = [GSTATE locationOfPosition:cell.position];
+    tile.position = CGPointMake(origin.x + GSTATE.tileSize / 2, origin.y + GSTATE.tileSize / 2);
+    [tile setScale:0];
+    tile.level = level;
+    [tile refreshValue];
+    
+    cell.tile = tile;
+    return tile;
+}
 
 - (instancetype)init {
   if (self = [super init]) {

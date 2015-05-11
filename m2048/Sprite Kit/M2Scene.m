@@ -36,7 +36,7 @@
 
 
 - (instancetype)initWithSize:(CGSize)size {
-  if (self = [super initWithSize:size]) _manager = [[M2GameManager alloc] init];
+  if (self = [super initWithSize:size]) _manager = [M2GameManager manager];
   return self;
 }
 

@@ -135,4 +135,36 @@
   } reverseOrder:NO];
 }
 
+
+#pragma mark - archives -
+
+- (NSArray *)dataForArchive
+{
+    NSMutableArray *dataArray = [NSMutableArray array];
+    for (NSInteger i = 0; i < self.dimension; i++)
+    {
+        for (NSInteger j = 0; j < self.dimension; j++)
+        {
+            M2Cell *cell = [[_grid objectAtIndex:i] objectAtIndex:j];
+            if (cell.tile) {
+                [dataArray addObject:[NSString stringWithFormat:@"%ld-%ld-%ld", (long)cell.position.x, (long)cell.position.y, (long)cell.tile.level]];
+            }
+        }
+    }
+    return dataArray;
+}
+
+- (void)insertTileAtPosision:(M2Position)posision level:(NSInteger)level
+{
+    M2Cell *cell = [self cellAtPosition:posision];
+    if (cell) {
+        M2Tile *tile = [M2Tile insertNewTileToCell:cell level:level];
+        [self.scene addChild:tile];
+        SKAction *delayAction = [SKAction waitForDuration:GSTATE.animationDuration];
+        SKAction *move = [SKAction moveBy:CGVectorMake(- GSTATE.tileSize / 2, - GSTATE.tileSize / 2)
+                                 duration:GSTATE.animationDuration];
+        SKAction *scale = [SKAction scaleTo:1 duration:GSTATE.animationDuration];
+        [tile runAction:[SKAction sequence:@[delayAction, [SKAction group:@[move, scale]]]]];
+    }
+}
 @end

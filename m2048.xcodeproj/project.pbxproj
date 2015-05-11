@@ -34,6 +34,13 @@
 		24C4517018DFF10B0001FCFD /* M2ScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C4516F18DFF10B0001FCFD /* M2ScoreView.m */; };
 		24C4517318E140AE0001FCFD /* M2SettingsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C4517218E140AE0001FCFD /* M2SettingsDetailViewController.m */; };
 		24C4518118E265390001FCFD /* M2Overlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C4518018E265390001FCFD /* M2Overlay.m */; };
+		C3D782E91AFF959100F7CC1E /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D782E51AFF959100F7CC1E /* SVIndefiniteAnimatedView.m */; };
+		C3D782EA1AFF959100F7CC1E /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C3D782E61AFF959100F7CC1E /* SVProgressHUD.bundle */; };
+		C3D782EB1AFF959100F7CC1E /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D782E81AFF959100F7CC1E /* SVProgressHUD.m */; };
+		C3D782EE1AFF966400F7CC1E /* M2ArchivesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D782ED1AFF966400F7CC1E /* M2ArchivesViewController.m */; };
+		C3D782F81AFFA94800F7CC1E /* NSFileManager-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D782F71AFFA94800F7CC1E /* NSFileManager-Utilities.m */; };
+		C3D782FB1AFFA9FB00F7CC1E /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D782FA1AFFA9FB00F7CC1E /* NSDate+Helper.m */; };
+		C3E13BBD1B00D41700E5D706 /* M2StateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3E13BBC1B00D41700E5D706 /* M2StateModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +99,19 @@
 		24C4517218E140AE0001FCFD /* M2SettingsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M2SettingsDetailViewController.m; sourceTree = "<group>"; };
 		24C4517F18E265390001FCFD /* M2Overlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M2Overlay.h; sourceTree = "<group>"; };
 		24C4518018E265390001FCFD /* M2Overlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M2Overlay.m; sourceTree = "<group>"; };
+		C3D782E41AFF959100F7CC1E /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		C3D782E51AFF959100F7CC1E /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		C3D782E61AFF959100F7CC1E /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		C3D782E71AFF959100F7CC1E /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		C3D782E81AFF959100F7CC1E /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		C3D782EC1AFF966400F7CC1E /* M2ArchivesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M2ArchivesViewController.h; sourceTree = "<group>"; };
+		C3D782ED1AFF966400F7CC1E /* M2ArchivesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M2ArchivesViewController.m; sourceTree = "<group>"; };
+		C3D782F61AFFA94800F7CC1E /* NSFileManager-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager-Utilities.h"; sourceTree = "<group>"; };
+		C3D782F71AFFA94800F7CC1E /* NSFileManager-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager-Utilities.m"; sourceTree = "<group>"; };
+		C3D782F91AFFA9FB00F7CC1E /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
+		C3D782FA1AFFA9FB00F7CC1E /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
+		C3E13BBB1B00D41700E5D706 /* M2StateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M2StateModel.h; sourceTree = "<group>"; };
+		C3E13BBC1B00D41700E5D706 /* M2StateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M2StateModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,12 +176,15 @@
 				2443DC6618D662CA00C920C1 /* M2AppDelegate.h */,
 				2443DC6718D662CA00C920C1 /* M2AppDelegate.m */,
 				2443DC6918D662CA00C920C1 /* Main.storyboard */,
+				C3D782E31AFF959100F7CC1E /* SVProgressHUD */,
 				2443DC9C18D6645800C920C1 /* Appearance */,
 				2443DC9D18D6645800C920C1 /* Controller */,
+				C3E13BBA1B00D3F100E5D706 /* model */,
 				24C4516018DABABE0001FCFD /* Global */,
 				2443DC9418D663FC00C920C1 /* Sprite Kit */,
 				2443DC9718D663FC00C920C1 /* State */,
 				24C4516518DD64630001FCFD /* View */,
+				C3D782F51AFFA94800F7CC1E /* utilities */,
 				2443DC5E18D662CA00C920C1 /* Supporting Files */,
 				2443DC7418D662CA00C920C1 /* Images.xcassets */,
 			);
@@ -239,6 +262,8 @@
 				2443DC9F18D6647000C920C1 /* M2SettingsViewController.m */,
 				24C4517118E140AE0001FCFD /* M2SettingsDetailViewController.h */,
 				24C4517218E140AE0001FCFD /* M2SettingsDetailViewController.m */,
+				C3D782EC1AFF966400F7CC1E /* M2ArchivesViewController.h */,
+				C3D782ED1AFF966400F7CC1E /* M2ArchivesViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -264,6 +289,38 @@
 				24C4518018E265390001FCFD /* M2Overlay.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C3D782E31AFF959100F7CC1E /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				C3D782E41AFF959100F7CC1E /* SVIndefiniteAnimatedView.h */,
+				C3D782E51AFF959100F7CC1E /* SVIndefiniteAnimatedView.m */,
+				C3D782E61AFF959100F7CC1E /* SVProgressHUD.bundle */,
+				C3D782E71AFF959100F7CC1E /* SVProgressHUD.h */,
+				C3D782E81AFF959100F7CC1E /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		C3D782F51AFFA94800F7CC1E /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C3D782F61AFFA94800F7CC1E /* NSFileManager-Utilities.h */,
+				C3D782F71AFFA94800F7CC1E /* NSFileManager-Utilities.m */,
+				C3D782F91AFFA9FB00F7CC1E /* NSDate+Helper.h */,
+				C3D782FA1AFFA9FB00F7CC1E /* NSDate+Helper.m */,
+			);
+			path = utilities;
+			sourceTree = "<group>";
+		};
+		C3E13BBA1B00D3F100E5D706 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				C3E13BBB1B00D41700E5D706 /* M2StateModel.h */,
+				C3E13BBC1B00D41700E5D706 /* M2StateModel.m */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,9 +371,6 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Danqing;
 				TargetAttributes = {
-					2443DC5118D662CA00C920C1 = {
-						DevelopmentTeam = EWJAR4GTP4;
-					};
 					2443DC7918D662CA00C920C1 = {
 						TestTargetID = 2443DC5118D662CA00C920C1;
 					};
@@ -349,6 +403,7 @@
 				2443DC6218D662CA00C920C1 /* InfoPlist.strings in Resources */,
 				2443DC7518D662CA00C920C1 /* Images.xcassets in Resources */,
 				2443DC6B18D662CA00C920C1 /* Main.storyboard in Resources */,
+				C3D782EA1AFF959100F7CC1E /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,16 +426,22 @@
 				2443DC6418D662CA00C920C1 /* main.m in Sources */,
 				24C4515B18D6DC4A0001FCFD /* M2Cell.m in Sources */,
 				24C4516818DD64A90001FCFD /* M2GridView.m in Sources */,
+				C3D782EE1AFF966400F7CC1E /* M2ArchivesViewController.m in Sources */,
 				2443DC9A18D663FC00C920C1 /* M2Scene.m in Sources */,
+				C3D782EB1AFF959100F7CC1E /* SVProgressHUD.m in Sources */,
 				24C4515E18D6DC740001FCFD /* M2Grid.m in Sources */,
 				24C4518118E265390001FCFD /* M2Overlay.m in Sources */,
 				2443DCAF18D6C18400C920C1 /* M2Tile.m in Sources */,
 				2443DCA018D6647000C920C1 /* M2SettingsViewController.m in Sources */,
 				24C4517018DFF10B0001FCFD /* M2ScoreView.m in Sources */,
 				2443DCA318D6649500C920C1 /* M2Theme.m in Sources */,
+				C3E13BBD1B00D41700E5D706 /* M2StateModel.m in Sources */,
+				C3D782E91AFF959100F7CC1E /* SVIndefiniteAnimatedView.m in Sources */,
 				24C4517318E140AE0001FCFD /* M2SettingsDetailViewController.m in Sources */,
 				24C4516418DABABE0001FCFD /* M2GlobalState.m in Sources */,
+				C3D782FB1AFFA9FB00F7CC1E /* NSDate+Helper.m in Sources */,
 				2443DC6818D662CA00C920C1 /* M2AppDelegate.m in Sources */,
+				C3D782F81AFFA94800F7CC1E /* NSFileManager-Utilities.m in Sources */,
 				2443DC9B18D663FC00C920C1 /* M2GameManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

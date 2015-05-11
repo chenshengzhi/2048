@@ -25,6 +25,8 @@
  */
 + (M2Tile *)insertNewTileToCell:(M2Cell *)cell;
 
++ (M2Tile *)insertNewTileToCell:(M2Cell *)cell level:(NSInteger)level;
+
 - (void)commitPendingActions;
 
 /**
