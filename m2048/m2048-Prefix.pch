@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-#define CLog(fmt, ...) NSLog((@" %s %d " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define CLog(fmt, ...) NSLog((@" %d %s " fmt), __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__)
 
 #import "M2GlobalState.h"
 #import "NSFileManager-Utilities.h"
