@@ -9,6 +9,7 @@
 #import "M2Scene.h"
 #import "M2GameManager.h"
 #import "M2GridView.h"
+#import "M2Tile.h"
 
 // The min distance in one direction for an effective swipe.
 #define EFFECTIVE_SWIPE_DISTANCE_THRESHOLD 20.0f
@@ -90,6 +91,12 @@
     if (swipe.state == UIGestureRecognizerStateBegan) {
         _hasPendingSwipe = YES;
         _swipe = swipe;
+        
+        [self enumerateChildNodesWithName:NSStringFromClass([M2Tile class]) usingBlock:^(SKNode *node, BOOL *stop) {
+            M2Tile *tile = (M2Tile *)node;
+            [tile clearForNewUnserInteraction];
+        }];
+        
     } else if (swipe.state == UIGestureRecognizerStateChanged) {
         [self commitTranslation:[swipe translationInView:self.view]];
     }

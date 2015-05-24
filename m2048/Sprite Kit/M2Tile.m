@@ -29,7 +29,7 @@ typedef void (^M2Block)();
 
 + (M2Tile *)insertNewTileToCell:(M2Cell *)cell {
     M2Tile *tile = [[M2Tile alloc] init];
-    
+    tile.name = NSStringFromClass([M2Tile class]);
     // The initial position of the tile is at the center of its cell. This is so because when
     // scaling the tile, SpriteKit does so from the origin, not the center. So we have to scale
     // the tile while moving it back to its normal position to achieve the "pop out" effect.
@@ -44,6 +44,7 @@ typedef void (^M2Block)();
 + (M2Tile *)insertNewTileToCell:(M2Cell *)cell level:(NSInteger)level
 {
     M2Tile *tile = [[M2Tile alloc] init];
+    tile.name = NSStringFromClass([M2Tile class]);
     CGPoint origin = [GSTATE locationOfPosition:cell.position];
     tile.position = CGPointMake(origin.x + GSTATE.tileSize / 2, origin.y + GSTATE.tileSize / 2);
     [tile setScale:0];
@@ -90,6 +91,7 @@ typedef void (^M2Block)();
 - (void)removeFromParentCell {
     // Check if the tile is still registered with its parent cell, and if so, remove it.
     // We don't really care about self.cell, because that is a weak pointer.
+    _destRemove = NO;
     if (self.cell.tile == self) self.cell.tile = nil;
 }
 
@@ -104,13 +106,15 @@ typedef void (^M2Block)();
 
 
 - (void)commitPendingActions {
-    [self runAction:[SKAction sequence:_pendingActions] completion:^{
-        [_pendingActions removeAllObjects];
-        if (_pendingBlock) {
-            _pendingBlock();
-            _pendingBlock = nil;
-        }
-    }];
+    if (_pendingActions.count > 0) {
+        [self runAction:[SKAction sequence:_pendingActions] completion:^{
+            [_pendingActions removeAllObjects];
+            if (_pendingBlock) {
+                _pendingBlock();
+                _pendingBlock = nil;
+            }
+        }];
+    }
 }
 
 
@@ -204,6 +208,7 @@ typedef void (^M2Block)();
 
 
 - (void)removeWithDelay {
+    _destRemove = YES;
     SKAction *wait = [SKAction waitForDuration:GSTATE.animationDuration];
     SKAction *remove = [SKAction removeFromParent];
     [self runAction:[SKAction sequence:@[wait, remove]] completion:^{
@@ -211,6 +216,34 @@ typedef void (^M2Block)();
     }];
 }
 
+- (void)clearForNewUnserInteraction
+{
+    // 移除的
+    if (_destRemove) {
+        [self removeAllActions];
+        [_pendingActions removeAllObjects];
+        [self runAction:[SKAction removeFromParent] completion:^{
+            [self removeFromParentCell];
+        }];
+    }
+    // 移动的
+    else if (_pendingActions.count > 0 /* 移动的 */ || [self hasActions] /* 新增的 */) {
+        [self removeAllActions];
+        [_pendingActions removeAllObjects];
+        
+        SKAction *layout = [SKAction runBlock:^{
+            self.position = [GSTATE locationOfPosition:self.cell.position];
+            [self setScale:1];
+            [self updateLevelTo:self.level];
+        }];
+        [self runAction:layout completion:^{
+            if (_pendingBlock) {
+                _pendingBlock();
+                _pendingBlock = nil;
+            }
+        }];
+    }
+}
 
 # pragma mark - SKAction helpers
 

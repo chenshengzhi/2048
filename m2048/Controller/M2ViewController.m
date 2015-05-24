@@ -168,7 +168,7 @@
   NSInteger side = GSTATE.dimension * (GSTATE.tileSize + GSTATE.borderWidth) + GSTATE.borderWidth;
   _overlay.center = CGPointMake(GSTATE.horizontalOffset + side / 2, verticalOffset - side / 2);
   
-  [UIView animateWithDuration:0.5 delay:1.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+  [UIView animateWithDuration:0.25 animations:^{
     _overlay.alpha = 1;
     _overlayBackground.alpha = 1;
   } completion:^(BOOL finished) {
@@ -182,7 +182,7 @@
 {
   ((SKView *)self.view).paused = NO;
   if (!_overlay.hidden) {
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
       _overlay.alpha = 0;
       _overlayBackground.alpha = 0;
     } completion:^(BOOL finished) {
@@ -190,13 +190,6 @@
       _overlayBackground.hidden = YES;
     }];
   }
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-  [super didReceiveMemoryWarning];
-  // Release any cached data, images, etc that aren't in use.
 }
 
 @end

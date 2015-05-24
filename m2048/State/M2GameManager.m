@@ -141,7 +141,6 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 // The current tile is movable.
                 if (target != position.x) {
                     [tile moveToCell:[_grid cellAtPosition:M2PositionMake(target, position.y)]];
-                    _pendingScore++;
                 }
             }
         } reverseOrder:reverse];
@@ -181,14 +180,10 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 // The current tile is movable.
                 if (target != position.y) {
                     [tile moveToCell:[_grid cellAtPosition:M2PositionMake(position.x, target)]];
-                    _pendingScore++;
                 }
             }
         } reverseOrder:reverse];
     }
-    
-    // Cannot move to the given direction. Abort.
-    if (!_pendingScore) return;
     
     // Commit tile movements.
     [_grid forEach:^(M2Position position) {
@@ -200,7 +195,9 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     } reverseOrder:reverse];
     
     // Increment score.
-    [self materializePendingScore];
+    if (_pendingScore) {
+        [self materializePendingScore];
+    }
     
     // Check post-move status.
     if (!_keepPlaying && _won) {

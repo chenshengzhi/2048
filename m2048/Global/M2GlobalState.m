@@ -61,7 +61,7 @@
   self.dimension = [Settings integerForKey:kBoardSize] + 3;
   self.borderWidth = 5;
   self.cornerRadius = 4;
-  self.animationDuration = 0.1;
+  self.animationDuration = 0.09;
   self.gameType = [Settings integerForKey:kGameType];
   self.horizontalOffset = [self horizontalOffset];
   self.verticalOffset = [self verticalOffset];

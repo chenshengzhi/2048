@@ -118,7 +118,7 @@
         M2Tile *tile = [M2Tile insertNewTileToCell:cell];
         [self.scene addChild:tile];
         
-        SKAction *delayAction = delay ? [SKAction waitForDuration:GSTATE.animationDuration * 3] :
+        SKAction *delayAction = delay ? [SKAction waitForDuration:GSTATE.animationDuration] :
         [SKAction waitForDuration:0];
         SKAction *move = [SKAction moveBy:CGVectorMake(- GSTATE.tileSize / 2, - GSTATE.tileSize / 2)
                                  duration:GSTATE.animationDuration];
