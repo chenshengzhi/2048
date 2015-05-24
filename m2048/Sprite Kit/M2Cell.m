@@ -12,17 +12,17 @@
 @implementation M2Cell
 
 - (instancetype)initWithPosition:(M2Position)position {
-  if (self = [super init]) {
-    self.position = position;
-    self.tile = nil;
-  }
-  return self;
+    if (self = [super init]) {
+        self.position = position;
+        self.tile = nil;
+    }
+    return self;
 }
 
 
 - (void)setTile:(M2Tile *)tile {
-  _tile = tile;
-  if (tile) tile.cell = self;
+    _tile = tile;
+    if (tile) tile.cell = self;
 }
 
 @end

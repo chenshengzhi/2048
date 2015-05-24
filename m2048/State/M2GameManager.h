@@ -13,10 +13,10 @@
 @class M2Grid;
 
 typedef NS_ENUM(NSInteger, M2Direction) {
-  M2DirectionUp,
-  M2DirectionLeft,
-  M2DirectionDown,
-  M2DirectionRight
+    M2DirectionUp,
+    M2DirectionLeft,
+    M2DirectionDown,
+    M2DirectionRight
 };
 
 @interface M2GameManager : NSObject
