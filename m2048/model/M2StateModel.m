@@ -20,6 +20,9 @@
         model.filePath = path;
         [modelsArray addObject:model];
     }
+    [modelsArray sortUsingComparator:^NSComparisonResult(M2StateModel *obj1, M2StateModel *obj2) {
+        return obj1.score < obj2.score;
+    }];
     return modelsArray;
 }
 
