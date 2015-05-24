@@ -25,10 +25,29 @@ typedef void (^M2Block)();
 }
 
 
+static NSMutableArray *_reusableTiles;
+
 # pragma mark - Tile creation
 
++ (void)load
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _reusableTiles = [NSMutableArray array];
+    });
+}
+
 + (M2Tile *)insertNewTileToCell:(M2Cell *)cell {
-    M2Tile *tile = [[M2Tile alloc] init];
+    M2Tile *tile = nil;
+    if (_reusableTiles.count > 0) {
+        tile = _reusableTiles.lastObject;
+        [_reusableTiles removeLastObject];
+        [tile prepareForReuse];
+    }
+    else
+    {
+        tile = [[M2Tile alloc] init];
+    }
     tile.name = NSStringFromClass([M2Tile class]);
     // The initial position of the tile is at the center of its cell. This is so because when
     // scaling the tile, SpriteKit does so from the origin, not the center. So we have to scale
@@ -43,15 +62,9 @@ typedef void (^M2Block)();
 
 + (M2Tile *)insertNewTileToCell:(M2Cell *)cell level:(NSInteger)level
 {
-    M2Tile *tile = [[M2Tile alloc] init];
-    tile.name = NSStringFromClass([M2Tile class]);
-    CGPoint origin = [GSTATE locationOfPosition:cell.position];
-    tile.position = CGPointMake(origin.x + GSTATE.tileSize / 2, origin.y + GSTATE.tileSize / 2);
-    [tile setScale:0];
+    M2Tile *tile = [M2Tile insertNewTileToCell:cell];
     tile.level = level;
     [tile refreshValue];
-    
-    cell.tile = tile;
     return tile;
 }
 
@@ -74,17 +87,28 @@ typedef void (^M2Block)();
         _value.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
         [self addChild:_value];
         
-        // For Fibonacci game, which is way harder than 2048 IMO, 40 seems to be the easiest number.
-        // 90 definitely won't work, as we need approximately equal number of 2 and 3 to make the
-        // game remotely makes sense.
-        if (GSTATE.gameType == M2GameTypeFibonacci) self.level = arc4random_uniform(100) < 40 ? 1 : 2;
-        else self.level = arc4random_uniform(100) < 95 ? 1 : 2;
-        
-        [self refreshValue];
+        [self setupValue];
     }
     return self;
 }
 
+- (void)setupValue
+{
+    // For Fibonacci game, which is way harder than 2048 IMO, 40 seems to be the easiest number.
+    // 90 definitely won't work, as we need approximately equal number of 2 and 3 to make the
+    // game remotely makes sense.
+    if (GSTATE.gameType == M2GameTypeFibonacci) self.level = arc4random_uniform(100) < 40 ? 1 : 2;
+    else self.level = arc4random_uniform(100) < 95 ? 1 : 2;
+    [self refreshValue];
+}
+
+- (void)prepareForReuse
+{
+    [self setScale:1];
+    [_pendingActions removeAllObjects];
+    _pendingBlock = nil;
+    [self setupValue];
+}
 
 # pragma mark - Public methods
 
@@ -93,6 +117,7 @@ typedef void (^M2Block)();
     // We don't really care about self.cell, because that is a weak pointer.
     _destRemove = NO;
     if (self.cell.tile == self) self.cell.tile = nil;
+    [_reusableTiles addObject:self];
 }
 
 
