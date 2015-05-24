@@ -17,6 +17,8 @@
 
 #define CLog(fmt, ...) NSLog((@" %d %s " fmt), __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__)
 
+#define M2LocalizedString(a) NSLocalizedStringFromTable(a, @"InfoPlist", nil)
+
 #import "M2GlobalState.h"
 #import "NSFileManager-Utilities.h"
 #import "NSDate+Helper.h"

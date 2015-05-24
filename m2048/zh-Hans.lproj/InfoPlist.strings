@@ -1,0 +1,18 @@
+/* Localized versions of Info.plist keys */
+
+"newChallenge" = "您的新挑战是获得";
+"GameOver" = "游戏结束";
+"You Win!" = "你赢啦!";
+"Save" = "保存";
+"LoadArchives" = "载入存档";
+"About2048" = "关于 2048";
+"Success" = "成功";
+"Failure" = "失败";
+"ChangingSettingsNote" = "注意: 修改以上设置会导致游戏重新开始";
+"GameType" = "游戏类型";
+"BoardSize" = "格子类型";
+"Theme" = "主题";
+"Powers2" = "乘方 2";
+"Powers3" = "乘方 3";
+"Fibonacci" = "斐波那契";
+"Archives" = "存档";

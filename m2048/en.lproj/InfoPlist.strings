@@ -1,2 +1,18 @@
 /* Localized versions of Info.plist keys */
 
+"newChallenge" = "Join the numbers to get to";
+"GameOver" = "Game Over";
+"You Win!" = "You Win!";
+"Save" = "Save";
+"LoadArchives" = "Load Archives";
+"About2048" = "About 2048";
+"Success" = "Success";
+"Failure" = "Failure";
+"ChangingSettingsNote" = "Please note: Changing the settings above would restart the game.";
+"GameType" = "Game Type";
+"BoardSize" = "Board Size";
+"Theme" = "Theme";
+"Powers2" = "Powers of 2";
+"Powers3" = "Powers of 3";
+"Fibonacci" = "Fibonacci";
+"Archives" = "Archives";

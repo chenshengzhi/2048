@@ -48,11 +48,11 @@
 
 - (void)commonInit
 {
-    _options = @[@"Game Type", @"Board Size", @"Theme"];
+    _options = @[M2LocalizedString(@"GameType"), M2LocalizedString(@"BoardSize"), M2LocalizedString(@"Theme")];
     
-    _archives = @[@"存档", @"载入存档"];
+    _archives = @[M2LocalizedString(@"Save"), M2LocalizedString(@"LoadArchives")];
     
-    _optionSelections = @[@[@"Powers of 2", @"Powers of 3", @"Fibonacci"],
+    _optionSelections = @[@[M2LocalizedString(@"Powers2"), M2LocalizedString(@"Powers3"), M2LocalizedString(@"Fibonacci")],
                           @[@"3 x 3", @"4 x 4", @"5 x 5"],
                           @[@"Default", @"Vibrant", @"Joyful"]];
     
@@ -120,7 +120,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     if (section == 2) {
-        return @"Please note: Changing the settings above would restart the game.";
+        return M2LocalizedString(@"ChangingSettingsNote");
     }
     return @"";
 }
@@ -141,7 +141,7 @@
         
         cell.detailTextLabel.text = @"";
     } else if (indexPath.section == 2) {
-        cell.textLabel.text = @"About 2048";
+        cell.textLabel.text = M2LocalizedString(@"About2048");
         cell.detailTextLabel.text = @"";
     }
     return cell;
@@ -150,17 +150,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     if (indexPath.section == 0) {
         [self performSegueWithIdentifier:@"Settings Detail Segue" sender:nil];
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             if ([[M2GameManager manager] saveCurrentState]) {
-                [SVProgressHUD showSuccessWithStatus:@"成功"];
+                [SVProgressHUD showSuccessWithStatus:M2LocalizedString(@"Success")];
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
-                [SVProgressHUD showErrorWithStatus:@"失败"];
+                [SVProgressHUD showErrorWithStatus:M2LocalizedString(@"Failure")];
             }
         } else {
             //TODO:从存档载入
@@ -168,8 +166,10 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     } else if (indexPath.section == 2) {
-        [self performSegueWithIdentifier:@"Settings Detail Segue" sender:nil];
+        [self performSegueWithIdentifier:@"About Segue" sender:nil];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

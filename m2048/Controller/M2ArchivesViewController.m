@@ -23,6 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = M2LocalizedString(@"Archives");
 }
 
 - (void)viewWillAppear:(BOOL)animated
