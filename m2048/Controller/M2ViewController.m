@@ -63,6 +63,14 @@
 }
 
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    ((SKView *)self.view).paused = NO;
+}
+
+
 - (void)updateState
 {
   [_scoreView updateAppearance];

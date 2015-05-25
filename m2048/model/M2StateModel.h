@@ -23,4 +23,10 @@
 
 - (BOOL)archive;
 
++ (instancetype)archiveFromDefaultFile;
+
++ (BOOL)clearDefaultFile;
+
+- (BOOL)archiveToDefaultFile;
+
 @end

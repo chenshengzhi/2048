@@ -160,11 +160,10 @@
     if (cell) {
         M2Tile *tile = [M2Tile insertNewTileToCell:cell level:level];
         [self.scene addChild:tile];
-        SKAction *delayAction = [SKAction waitForDuration:GSTATE.animationDuration];
         SKAction *move = [SKAction moveBy:CGVectorMake(- GSTATE.tileSize / 2, - GSTATE.tileSize / 2)
                                  duration:GSTATE.animationDuration];
         SKAction *scale = [SKAction scaleTo:1 duration:GSTATE.animationDuration];
-        [tile runAction:[SKAction sequence:@[delayAction, [SKAction group:@[move, scale]]]]];
+        [tile runAction:[SKAction group:@[move, scale]]];
     }
 }
 @end

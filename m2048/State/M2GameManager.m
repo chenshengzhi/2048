@@ -60,6 +60,18 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     return manager;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillTerminateNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            if (!_over) {
+                [self saveCurrentStateForTerminate];
+            }
+        }];
+    }
+    return self;
+}
 
 # pragma mark - Setup
 
@@ -86,10 +98,21 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 {
     // If the scene only has one child (the board), we can proceed with adding new tiles
     // since all old ones are removed. After adding new tiles, remove the displaylink.
-    if (_grid.scene.children.count <= 1) {
-        [_grid insertTileAtRandomAvailablePositionWithDelay:NO];
-        [_grid insertTileAtRandomAvailablePositionWithDelay:NO];
-        [_addTileDisplayLink invalidate];
+    
+    M2StateModel *model = [M2StateModel archiveFromDefaultFile];
+    if (model)
+    {
+        [M2StateModel clearDefaultFile];
+        [self loadFromArchive:model];
+    }
+    else
+    {
+        if (_grid.scene.children.count <= 1)
+        {
+            [_grid insertTileAtRandomAvailablePositionWithDelay:NO];
+            [_grid insertTileAtRandomAvailablePositionWithDelay:NO];
+            [_addTileDisplayLink invalidate];
+        }
     }
 }
 
@@ -99,6 +122,8 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 - (void)moveToDirection:(M2Direction)direction
 {
     __block M2Tile *tile = nil;
+    
+    __block BOOL hasMovement = NO;
     
     // Remember that the coordinate system of SpriteKit is the reverse of that of UIKit.
     BOOL reverse = direction == M2DirectionUp || direction == M2DirectionRight;
@@ -130,6 +155,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                         }
                         
                         if (level) {
+                            hasMovement = YES;
                             target = position.x;
                             _pendingScore = [GSTATE valueForLevel:level];
                         }
@@ -141,6 +167,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 // The current tile is movable.
                 if (target != position.x) {
                     [tile moveToCell:[_grid cellAtPosition:M2PositionMake(target, position.y)]];
+                    hasMovement = YES;
                 }
             }
         } reverseOrder:reverse];
@@ -169,6 +196,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                         }
                         
                         if (level) {
+                            hasMovement = YES;
                             target = position.y;
                             _pendingScore = [GSTATE valueForLevel:level];
                         }
@@ -179,10 +207,20 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 
                 // The current tile is movable.
                 if (target != position.y) {
+                    hasMovement = YES;
                     [tile moveToCell:[_grid cellAtPosition:M2PositionMake(position.x, target)]];
                 }
             }
         } reverseOrder:reverse];
+    }
+    
+    // Increment score.
+    if (_pendingScore) {
+        [self materializePendingScore];
+    }
+    
+    if (!hasMovement) {
+        return;
     }
     
     // Commit tile movements.
@@ -193,11 +231,6 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
             if (tile.level >= GSTATE.winningLevel) _won = YES;
         }
     } reverseOrder:reverse];
-    
-    // Increment score.
-    if (_pendingScore) {
-        [self materializePendingScore];
-    }
     
     // Check post-move status.
     if (!_keepPlaying && _won) {
@@ -213,6 +246,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
         [_grid insertTileAtRandomAvailablePositionWithDelay:YES];
     
     if (![self movesAvailable]) {
+        _over = YES;
         [_grid.scene.controller endGame:NO];
     }
 }
@@ -302,6 +336,18 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     return [model archive];
 }
 
+- (BOOL)saveCurrentStateForTerminate
+{
+    M2StateModel *model = [[M2StateModel alloc] init];
+    model.gameType = GSTATE.gameType;
+    model.dimension = GSTATE.dimension;
+    model.score = _score;
+    model.grids = [_grid dataForArchive];
+    model.date = [[NSDate alloc] init];
+    
+    return [model archiveToDefaultFile];
+}
+
 - (BOOL)loadFromArchive:(M2StateModel *)model
 {
     [Settings setInteger:model.gameType forKey:@"Game Type"];
@@ -325,8 +371,6 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
         }
     }];
     
-    SKView *skView = (SKView *)_grid.scene.controller.view;
-    skView.paused = NO;
     return YES;
 }
 

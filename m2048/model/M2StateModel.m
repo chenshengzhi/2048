@@ -26,6 +26,31 @@
     return modelsArray;
 }
 
+- (BOOL)archive
+{
+    NSString *fileName = [NSString stringWithFormat:@"%lld.data", (int64_t)[self.date timeIntervalSinceReferenceDate]];
+    NSString *filePath = [NSDocumentsFolder() stringByAppendingPathComponent:fileName];
+    
+    CLog(@"save");
+    
+    return [NSKeyedArchiver archiveRootObject:self toFile:filePath];
+}
+
+- (BOOL)archiveToDefaultFile
+{
+    return [NSKeyedArchiver archiveRootObject:self toFile:[NSDocumentsFolder() stringByAppendingPathComponent:@".terminate.data"]];
+}
+
++ (instancetype)archiveFromDefaultFile
+{
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:[NSDocumentsFolder() stringByAppendingPathComponent:@".terminate.data"]];
+}
+
++ (BOOL)clearDefaultFile
+{
+    return [NSFileManager deleteFile:[NSDocumentsFolder() stringByAppendingPathComponent:@".terminate.data"]];
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super init]) {
@@ -47,12 +72,4 @@
     [aCoder encodeObject:_date forKey:@"date"];
 }
 
-
-- (BOOL)archive
-{
-    NSString *fileName = [NSString stringWithFormat:@"%lld.data", (int64_t)[self.date timeIntervalSinceReferenceDate]];
-    NSString *filePath = [NSDocumentsFolder() stringByAppendingPathComponent:fileName];
-    
-    return [NSKeyedArchiver archiveRootObject:self toFile:filePath];
-}
 @end
