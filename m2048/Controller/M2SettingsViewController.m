@@ -19,7 +19,7 @@
 
 @implementation M2SettingsViewController {
     IBOutlet UITableView *_tableView;
-    NSArray *_options;
+    NSArray *_titles;
     NSArray *_keys;
     NSArray *_optionSelections;
     NSArray *_optionsNotes;
@@ -49,7 +49,7 @@
 
 - (void)commonInit
 {
-    _options = @[M2LocalizedString(@"GameType"), M2LocalizedString(@"BoardSize"), M2LocalizedString(@"Theme")];
+    _titles = @[M2LocalizedString(@"GameType"), M2LocalizedString(@"BoardSize"), M2LocalizedString(@"Theme")];
     
     _keys = @[@"Game Type", @"Board Size", @"Theme"];
     
@@ -91,7 +91,7 @@
         M2SettingsDetailViewController *sdvc = segue.destinationViewController;
         
         NSInteger index = [_tableView indexPathForSelectedRow].row;
-        sdvc.title = [_options objectAtIndex:index];
+        sdvc.title = [_titles objectAtIndex:index];
         sdvc.key = [_keys objectAtIndex:index];
         sdvc.options = [_optionSelections objectAtIndex:index];
         sdvc.footer = [_optionsNotes objectAtIndex:index];
@@ -110,7 +110,7 @@
 {
     switch (section) {
         case 0:
-            return _options.count;
+            return _titles.count;
         case 1:
             return _archives.count;
         case 2:
@@ -134,9 +134,9 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Settings Cell"];
     if (indexPath.section == 0) {
-        cell.textLabel.text = [_options objectAtIndex:indexPath.row];
+        cell.textLabel.text = [_titles objectAtIndex:indexPath.row];
         
-        NSInteger index = [Settings integerForKey:[_options objectAtIndex:indexPath.row]];
+        NSInteger index = [Settings integerForKey:[_keys objectAtIndex:indexPath.row]];
         cell.detailTextLabel.text = [[_optionSelections objectAtIndex:indexPath.row] objectAtIndex:index];
         cell.detailTextLabel.textColor = [GSTATE scoreBoardColor];
     } else if (indexPath.section == 1)
