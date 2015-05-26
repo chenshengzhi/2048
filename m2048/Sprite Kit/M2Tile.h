@@ -69,4 +69,6 @@
 
 - (void)clearForNewUnserInteraction;
 
++ (void)clearForDimentionChange;
+
 @end

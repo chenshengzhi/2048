@@ -77,10 +77,19 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 
 - (void)startNewSessionWithScene:(M2Scene *)scene
 {
-    if (_grid) [_grid removeAllTilesAnimated:NO];
-    if (!_grid || _grid.dimension != GSTATE.dimension) {
+    if (!_grid || _grid.dimension != GSTATE.dimension)
+    {
+        [_grid.scene enumerateChildNodesWithName:NSStringFromClass([M2Tile class]) usingBlock:^(SKNode *node, BOOL *stop) {
+            M2Tile *tile = (M2Tile *)node;
+            [tile removeFromParent];
+        }];
+        
         _grid = [[M2Grid alloc] initWithDimension:GSTATE.dimension];
         _grid.scene = scene;
+    }
+    else
+    {
+        [_grid removeAllTilesAnimated:NO];
     }
     
     [scene loadBoardWithGrid:_grid];
@@ -353,12 +362,30 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     [Settings setInteger:model.gameType forKey:@"Game Type"];
     [Settings setInteger:model.dimension-3 forKey:@"Board Size"];
     [GSTATE loadGlobalState];
+    
+    if (!_grid || _grid.dimension != GSTATE.dimension)
+    {
+        [_grid.scene enumerateChildNodesWithName:NSStringFromClass([M2Tile class]) usingBlock:^(SKNode *node, BOOL *stop) {
+            M2Tile *tile = (M2Tile *)node;
+            [tile removeFromParent];
+        }];
+        
+        M2Grid *newGrid = [[M2Grid alloc] initWithDimension:GSTATE.dimension];
+        newGrid.scene = _grid.scene;
+        _grid = newGrid;
+    }
+    else
+    {
+        [_grid removeAllTilesAnimated:YES];
+    }
+    
+    [_grid.scene loadBoardWithGrid:_grid];
+    
+    
     [_grid.scene.controller updateState];
     _score = model.score;
     _pendingScore = 0;
     [_grid.scene.controller updateScore:_score];
-    
-    [_grid removeAllTilesAnimated:YES];
     
     [model.grids enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
         NSArray *components = [obj componentsSeparatedByString:@"-"];

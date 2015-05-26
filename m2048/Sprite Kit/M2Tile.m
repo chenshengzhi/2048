@@ -270,6 +270,14 @@ static NSMutableArray *_reusableTiles;
     }
 }
 
+
++ (void)clearForDimentionChange
+{
+    if (_reusableTiles.count > 0) {
+        [_reusableTiles removeAllObjects];
+    }
+}
+
 # pragma mark - SKAction helpers
 
 - (SKAction *)pop {
