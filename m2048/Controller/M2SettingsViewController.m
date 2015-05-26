@@ -20,6 +20,7 @@
 @implementation M2SettingsViewController {
     IBOutlet UITableView *_tableView;
     NSArray *_options;
+    NSArray *_keys;
     NSArray *_optionSelections;
     NSArray *_optionsNotes;
     NSArray *_archives;
@@ -49,6 +50,8 @@
 - (void)commonInit
 {
     _options = @[M2LocalizedString(@"GameType"), M2LocalizedString(@"BoardSize"), M2LocalizedString(@"Theme")];
+    
+    _keys = @[@"Game Type", @"Board Size", @"Theme"];
     
     _archives = @[M2LocalizedString(@"Save"), M2LocalizedString(@"LoadArchives")];
     
@@ -89,6 +92,7 @@
         
         NSInteger index = [_tableView indexPathForSelectedRow].row;
         sdvc.title = [_options objectAtIndex:index];
+        sdvc.key = [_keys objectAtIndex:index];
         sdvc.options = [_optionSelections objectAtIndex:index];
         sdvc.footer = [_optionsNotes objectAtIndex:index];
     }

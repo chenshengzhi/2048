@@ -40,7 +40,7 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Settings Detail Cell"];
   
   cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
-  cell.accessoryType = ([Settings integerForKey:self.title] == indexPath.row) ?
+  cell.accessoryType = ([Settings integerForKey:self.key] == indexPath.row) ?
     UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
   cell.tintColor = [GSTATE scoreBoardColor];
   
@@ -48,7 +48,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [Settings setInteger:indexPath.row forKey:self.title];
+  [Settings setInteger:indexPath.row forKey:self.key];
   [self.tableView reloadData];
   GSTATE.needRefresh = YES;
 }

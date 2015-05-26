@@ -10,6 +10,7 @@
 
 @interface M2SettingsDetailViewController : UITableViewController
 
+@property (nonatomic, strong) NSString *key;
 @property (nonatomic, strong) NSArray *options;
 @property (nonatomic, strong) NSString *footer;
 
