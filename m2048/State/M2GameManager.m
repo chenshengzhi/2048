@@ -141,6 +141,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     if (direction == M2DirectionUp || direction == M2DirectionDown) {
         [_grid forEach:^(M2Position position) {
             if ((tile = [_grid tileAtPosition:position])) {
+                BOOL pending = NO;
                 // Find farthest position to move to.
                 NSInteger target = position.x;
                 for (NSInteger i = position.x + unit; iterate(i, reverse, _grid.dimension, -1); i += unit) {
@@ -164,6 +165,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                         }
                         
                         if (level) {
+                            pending = YES;
                             hasMovement = YES;
                             target = position.x;
                             _pendingScore = [GSTATE valueForLevel:level];
@@ -174,7 +176,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 }
                 
                 // The current tile is movable.
-                if (target != position.x) {
+                if (!pending && target != position.x) {
                     [tile moveToCell:[_grid cellAtPosition:M2PositionMake(target, position.y)]];
                     hasMovement = YES;
                 }
@@ -185,6 +187,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     else {
         [_grid forEach:^(M2Position position) {
             if ((tile = [_grid tileAtPosition:position])) {
+                BOOL pending = NO;
                 NSInteger target = position.y;
                 for (NSInteger i = position.y + unit; iterate(i, reverse, _grid.dimension, -1); i += unit) {
                     M2Tile *t = [_grid tileAtPosition:M2PositionMake(position.x, i)];
@@ -205,6 +208,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                         }
                         
                         if (level) {
+                            pending = YES;
                             hasMovement = YES;
                             target = position.y;
                             _pendingScore = [GSTATE valueForLevel:level];
@@ -215,7 +219,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 }
                 
                 // The current tile is movable.
-                if (target != position.y) {
+                if (!pending && target != position.y) {
                     hasMovement = YES;
                     [tile moveToCell:[_grid cellAtPosition:M2PositionMake(position.x, target)]];
                 }
