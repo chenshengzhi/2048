@@ -27,6 +27,8 @@
     
     IBOutlet M2Overlay *_overlay;
     IBOutlet UIImageView *_overlayBackground;
+    
+    NSString *_bestScoreKey;
 }
 
 - (void)viewDidLoad
@@ -35,7 +37,7 @@
     
     [self updateState];
     
-    _bestView.score.text = [NSString stringWithFormat:@"%ld", (long)[Settings integerForKey:@"Best Score"]];
+    _bestView.score.text = @"0";
     
     _restartButton.layer.cornerRadius = [GSTATE cornerRadius];
     _restartButton.layer.masksToBounds = YES;
@@ -60,6 +62,13 @@
     
     _scene = scene;
     _scene.controller = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    _bestScoreKey = nil;
 }
 
 
@@ -113,8 +122,13 @@
 - (void)updateScore:(NSInteger)score
 {
     _scoreView.score.text = [NSString stringWithFormat:@"%ld", (long)score];
-    if ([Settings integerForKey:@"Best Score"] < score) {
-        [Settings setInteger:score forKey:@"Best Score"];
+    
+    if (!_bestScoreKey) {
+        _bestScoreKey = [NSString stringWithFormat:@"BestScore-%@-%@", @(GSTATE.dimension), @(GSTATE.gameType)];
+        _bestView.score.text = [@(MAX([Settings integerForKey:_bestScoreKey], score)) stringValue];
+    }
+    if ([Settings integerForKey:_bestScoreKey] < score) {
+        [Settings setInteger:score forKey:_bestScoreKey];
         _bestView.score.text = [NSString stringWithFormat:@"%ld", (long)score];
     }
 }
@@ -166,6 +180,9 @@
     } else {
         _overlay.keepPlaying.hidden = NO;
         _overlay.message.text = M2LocalizedString(@"You Win!");
+        
+        NSString *key = [NSString stringWithFormat:@"WinningLevel-%@-%@", @(GSTATE.dimension), @(GSTATE.gameType)];
+        [Settings setInteger:GSTATE.winningLevel forKey:key];
     }
     
     // Fake the overlay background as a mask on the board.

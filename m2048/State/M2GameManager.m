@@ -33,9 +33,6 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     /** True if won game. */
     BOOL _won;
     
-    /** True if user chooses to keep playing after winning. */
-    BOOL _keepPlaying;
-    
     /** The current score. */
     NSInteger _score;
     
@@ -95,7 +92,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     [scene loadBoardWithGrid:_grid];
     
     // Set the initial state for the game.
-    _score = 0; _over = NO; _won = NO; _keepPlaying = NO;
+    _score = 0; _over = NO; _won = NO;
     
     // Existing tile removal is async and happens in the next screen refresh, so we'd wait a bit.
     _addTileDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(addTwoRandomTiles)];
@@ -246,10 +243,10 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     } reverseOrder:reverse];
     
     // Check post-move status.
-    if (!_keepPlaying && _won) {
+    if (_won) {
         // We set `keepPlaying` to YES. If the user decides not to keep playing,
         // we will be starting a new game, so the current state is no longer relevant.
-        _keepPlaying = YES;
+        _won = NO;
         [_grid.scene.controller endGame:YES];
     }
     

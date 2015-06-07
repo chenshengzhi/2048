@@ -13,7 +13,6 @@
 #define kGameType  @"Game Type"
 #define kTheme     @"Theme"
 #define kBoardSize @"Board Size"
-#define kBestScore @"Best Score"
 
 @interface M2GlobalState ()
 
@@ -54,7 +53,7 @@
 }
 
 - (void)setupDefaultState {
-    NSDictionary *defaultValues = @{kGameType: @0, kTheme: @0, kBoardSize: @1, kBestScore: @0};
+    NSDictionary *defaultValues = @{kGameType: @0, kTheme: @0, kBoardSize: @1};
     [Settings registerDefaults:defaultValues];
 }
 
@@ -94,6 +93,12 @@
 
 
 - (NSInteger)winningLevel {
+    
+    NSNumber *winningLevelNumber = [Settings objectForKey:[NSString stringWithFormat:@"WinningLevel-%@-%@", @(_dimension), @(_gameType)]];
+    if (winningLevelNumber) {
+        return winningLevelNumber.unsignedIntegerValue + 1;
+    }
+    
     if (GSTATE.gameType == M2GameTypePowerOf3) {
         switch (self.dimension) {
             case 3: return 4;
