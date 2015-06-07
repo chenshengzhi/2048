@@ -33,6 +33,9 @@ typedef NS_ENUM(NSInteger, M2GameType) {
 
 @property (nonatomic) BOOL needRefresh;
 
+
+- (void)win;
+
 /** The singleton instance of state. */
 + (M2GlobalState *)state;
 

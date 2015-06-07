@@ -183,6 +183,8 @@
         
         NSString *key = [NSString stringWithFormat:@"WinningLevel-%@-%@", @(GSTATE.dimension), @(GSTATE.gameType)];
         [Settings setInteger:GSTATE.winningLevel forKey:key];
+        
+        [GSTATE win];
     }
     
     // Fake the overlay background as a mask on the board.
