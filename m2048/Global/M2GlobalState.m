@@ -72,27 +72,6 @@
     self.verticalOffset = [self verticalOffset];
     self.theme = [Settings integerForKey:kTheme];
     self.needRefresh = NO;
-    
-    NSNumber *winningLevelNumber = [Settings objectForKey:[NSString stringWithFormat:@"WinningLevel-%@-%@", @(_dimension), @(_gameType)]];
-    if (winningLevelNumber) {
-        _winningLevel = winningLevelNumber.unsignedIntegerValue + 1;
-    }
-    else
-    {
-        if (GSTATE.gameType == M2GameTypePowerOf3) {
-            switch (self.dimension) {
-                case 3: _winningLevel = 4;
-                case 4: _winningLevel = 5;
-                case 5: _winningLevel = 6;
-            }
-        }
-        else
-        {
-            NSInteger level = 11;
-            if (self.dimension == 3) _winningLevel = level - 1;
-            if (self.dimension == 5) _winningLevel = level + 2;
-        }
-    }
 }
 
 
@@ -110,6 +89,29 @@
 - (NSInteger)verticalOffset {
     CGFloat height = self.dimension * (self.tileSize + self.borderWidth) + self.borderWidth + 120;
     return ([[UIScreen mainScreen] bounds].size.height - height) / 2;
+}
+
+
+- (NSInteger)winningLevel {
+    
+    NSNumber *winningLevelNumber = [Settings objectForKey:[NSString stringWithFormat:@"WinningLevel-%@-%@", @(_dimension), @(_gameType)]];
+    if (winningLevelNumber) {
+        return winningLevelNumber.unsignedIntegerValue + 1;
+    }
+    
+    if (GSTATE.gameType == M2GameTypePowerOf3) {
+        switch (self.dimension) {
+            case 3: return 4;
+            case 4: return 5;
+            case 5: return 6;
+            default: return 5;
+        }
+    }
+    
+    NSInteger level = 11;
+    if (self.dimension == 3) return level - 1;
+    if (self.dimension == 5) return level + 2;
+    return level;
 }
 
 
@@ -148,10 +150,6 @@
     }
 }
 
-- (void)win
-{
-    _winningLevel++;
-}
 
 # pragma mark - Appearance
 
