@@ -11,8 +11,7 @@
 
 @implementation M2StateModel
 
-+ (NSArray *)archivedModels
-{
++ (NSArray *)archivedModels {
     NSArray *files = [NSFileManager filesInFolder:NSDocumentsFolder()];
     NSMutableArray *modelsArray = [NSMutableArray array];
     for (NSString *path in files) {
@@ -26,8 +25,7 @@
     return modelsArray;
 }
 
-- (BOOL)archive
-{
+- (BOOL)archive {
     NSString *fileName = [NSString stringWithFormat:@"%lld.data", (int64_t)[self.date timeIntervalSinceReferenceDate]];
     NSString *filePath = [NSDocumentsFolder() stringByAppendingPathComponent:fileName];
     
@@ -36,23 +34,19 @@
     return [NSKeyedArchiver archiveRootObject:self toFile:filePath];
 }
 
-- (BOOL)archiveToDefaultFile
-{
+- (BOOL)archiveToDefaultFile {
     return [NSKeyedArchiver archiveRootObject:self toFile:[NSDocumentsFolder() stringByAppendingPathComponent:@".terminate.data"]];
 }
 
-+ (instancetype)archiveFromDefaultFile
-{
++ (instancetype)archiveFromDefaultFile {
     return [NSKeyedUnarchiver unarchiveObjectWithFile:[NSDocumentsFolder() stringByAppendingPathComponent:@".terminate.data"]];
 }
 
-+ (BOOL)clearDefaultFile
-{
++ (BOOL)clearDefaultFile {
     return [NSFileManager deleteFile:[NSDocumentsFolder() stringByAppendingPathComponent:@".terminate.data"]];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
+- (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _gameType = [aDecoder decodeIntegerForKey:@"gameType"];
         _dimension = [aDecoder decodeIntegerForKey:@"dimension"];
@@ -63,8 +57,7 @@
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:_gameType forKey:@"gameType"];
     [aCoder encodeInteger:_dimension forKey:@"dimension"];
     [aCoder encodeInteger:_score forKey:@"score"];

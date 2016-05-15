@@ -29,8 +29,7 @@
 
 # pragma mark - Set up
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         [self commonInit];
     }
@@ -38,8 +37,7 @@
 }
 
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         [self commonInit];
     }
@@ -47,8 +45,7 @@
 }
 
 
-- (void)commonInit
-{
+- (void)commonInit {
     _titles = @[M2LocalizedString(@"GameType"), M2LocalizedString(@"BoardSize"), M2LocalizedString(@"Theme")];
     
     _keys = @[@"Game Type", @"Board Size", @"Theme"];
@@ -65,28 +62,24 @@
 }
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor = [GSTATE scoreBoardColor];
     // Do any additional setup after loading the view.
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [_tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Settings Detail Segue"]) {
         M2SettingsDetailViewController *sdvc = segue.destinationViewController;
         
@@ -100,14 +93,12 @@
 
 # pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
             return _titles.count;
@@ -121,8 +112,7 @@
 }
 
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 2) {
         return M2LocalizedString(@"ChangingSettingsNote");
     }
@@ -130,8 +120,7 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Settings Cell"];
     if (indexPath.section == 0) {
         cell.textLabel.text = [_titles objectAtIndex:indexPath.row];
@@ -139,8 +128,7 @@
         NSInteger index = [Settings integerForKey:[_keys objectAtIndex:indexPath.row]];
         cell.detailTextLabel.text = [[_optionSelections objectAtIndex:indexPath.row] objectAtIndex:index];
         cell.detailTextLabel.textColor = [GSTATE scoreBoardColor];
-    } else if (indexPath.section == 1)
-    {
+    } else if (indexPath.section == 1) {
         cell.textLabel.text = [_archives objectAtIndex:indexPath.row];
         
         cell.detailTextLabel.text = @"";
@@ -152,8 +140,7 @@
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         [self performSegueWithIdentifier:@"Settings Detail Segue" sender:nil];
     } else if (indexPath.section == 1) {

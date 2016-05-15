@@ -99,9 +99,7 @@
         
     } else if (swipe.state == UIGestureRecognizerStateChanged) {
         [self commitTranslation:[swipe translationInView:self.view]];
-    }
-    else if (swipe.state == UIGestureRecognizerStateEnded || swipe.state == UIGestureRecognizerStateCancelled)
-    {
+    } else if (swipe.state == UIGestureRecognizerStateEnded || swipe.state == UIGestureRecognizerStateCancelled) {
         _swipe = nil;
     }
 }

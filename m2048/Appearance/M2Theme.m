@@ -17,8 +17,7 @@
 
 @implementation M2DefaultTheme
 
-+ (UIColor *)colorForLevel:(NSInteger)level
-{
++ (UIColor *)colorForLevel:(NSInteger)level {
   switch (level) {
     case 1:
       return RGB(238, 228, 218);
@@ -55,8 +54,7 @@
 }
 
 
-+ (UIColor *)textColorForLevel:(NSInteger)level
-{
++ (UIColor *)textColorForLevel:(NSInteger)level {
   switch (level) {
     case 1:
     case 2:
@@ -67,38 +65,32 @@
 }
 
 
-+ (UIColor *)backgroundColor
-{
++ (UIColor *)backgroundColor {
   return RGB(250, 248, 239);
 }
 
 
-+ (UIColor *)boardColor
-{
++ (UIColor *)boardColor {
   return RGB(204, 192, 179);
 }
 
 
-+ (UIColor *)scoreBoardColor
-{
++ (UIColor *)scoreBoardColor {
   return RGB(187, 173, 160);
 }
 
 
-+ (UIColor *)buttonColor
-{
++ (UIColor *)buttonColor {
   return RGB(119, 110, 101);
 }
 
 
-+ (NSString *)boldFontName
-{
++ (NSString *)boldFontName {
   return @"AvenirNext-DemiBold";
 }
 
 
-+ (NSString *)regularFontName
-{
++ (NSString *)regularFontName {
   return @"AvenirNext-Regular";
 }
 
@@ -110,8 +102,7 @@
 
 @implementation M2VibrantTheme
 
-+ (UIColor *)colorForLevel:(NSInteger)level
-{
++ (UIColor *)colorForLevel:(NSInteger)level {
   switch (level) {
     case 1:
       return RGB(254, 223, 180);
@@ -148,8 +139,7 @@
 }
 
 
-+ (UIColor *)textColorForLevel:(NSInteger)level
-{
++ (UIColor *)textColorForLevel:(NSInteger)level {
   switch (level) {
     case 1:
     case 2:
@@ -169,38 +159,32 @@
 }
 
 
-+ (UIColor *)backgroundColor
-{
++ (UIColor *)backgroundColor {
   return RGB(240, 240, 240);
 }
 
 
-+ (UIColor *)boardColor
-{
++ (UIColor *)boardColor {
   return RGB(240, 240, 240);
 }
 
 
-+ (UIColor *)scoreBoardColor
-{
++ (UIColor *)scoreBoardColor {
   return RGB(253, 144, 38);
 }
 
 
-+ (UIColor *)buttonColor
-{
++ (UIColor *)buttonColor {
   return RGB(205, 35, 85);
 }
 
 
-+ (NSString *)boldFontName
-{
++ (NSString *)boldFontName {
   return @"AvenirNext-DemiBold";
 }
 
 
-+ (NSString *)regularFontName
-{
++ (NSString *)regularFontName {
   return @"AvenirNext-Regular";
 }
 
@@ -213,8 +197,7 @@
 
 @implementation M2JoyfulTheme
 
-+ (UIColor *)colorForLevel:(NSInteger)level
-{
++ (UIColor *)colorForLevel:(NSInteger)level {
   switch (level) {
     case 1:
       return RGB(236, 243, 251);
@@ -251,8 +234,7 @@
 }
 
 
-+ (UIColor *)textColorForLevel:(NSInteger)level
-{
++ (UIColor *)textColorForLevel:(NSInteger)level {
   switch (level) {
     case 1:
       return RGB(104, 119, 131);
@@ -288,38 +270,32 @@
 }
 
 
-+ (UIColor *)backgroundColor
-{
++ (UIColor *)backgroundColor {
   return RGB(255, 254, 237);
 }
 
 
-+ (UIColor *)boardColor
-{
++ (UIColor *)boardColor {
   return RGB(255, 254, 237);
 }
 
 
-+ (UIColor *)scoreBoardColor
-{
++ (UIColor *)scoreBoardColor {
   return RGB(243, 168, 40);
 }
 
 
-+ (UIColor *)buttonColor
-{
++ (UIColor *)buttonColor {
   return RGB(242, 79, 46);
 }
 
 
-+ (NSString *)boldFontName
-{
++ (NSString *)boldFontName {
   return @"AvenirNext-DemiBold";
 }
 
 
-+ (NSString *)regularFontName
-{
++ (NSString *)regularFontName {
   return @"AvenirNext-Regular";
 }
 
@@ -328,8 +304,7 @@
 
 @implementation M2Theme
 
-+ (Class)themeClassForType:(NSInteger)type
-{
++ (Class)themeClassForType:(NSInteger)type {
   switch (type) {
     case 1:
       return [M2VibrantTheme class];

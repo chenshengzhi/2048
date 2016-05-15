@@ -212,15 +212,13 @@ static NSDateFormatter *_displayFormatter = nil;
 			if (thatYear >= thisYear) {
                 if (displayTime) {
                     [[self sharedDateFormatter] setDateFormat:kNSDateHelperFormatShortDateWithTime];
-                }
-                else {
+                } else {
                     [[self sharedDateFormatter] setDateFormat:kNSDateHelperFormatShortDate];
                 }
 			} else {
                 if (displayTime) {
                     [[self sharedDateFormatter] setDateFormat:kNSDateHelperFormatFullDateWithTime];
-                }
-                else {
+                } else {
                     [[self sharedDateFormatter] setDateFormat:kNSDateHelperFormatFullDate];
                 }
 			}

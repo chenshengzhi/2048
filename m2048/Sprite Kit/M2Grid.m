@@ -138,13 +138,10 @@
 
 #pragma mark - archives -
 
-- (NSArray *)dataForArchive
-{
+- (NSArray *)dataForArchive {
     NSMutableArray *dataArray = [NSMutableArray array];
-    for (NSInteger i = 0; i < self.dimension; i++)
-    {
-        for (NSInteger j = 0; j < self.dimension; j++)
-        {
+    for (NSInteger i = 0; i < self.dimension; i++) {
+        for (NSInteger j = 0; j < self.dimension; j++) {
             M2Cell *cell = [[_grid objectAtIndex:i] objectAtIndex:j];
             if (cell.tile) {
                 [dataArray addObject:[NSString stringWithFormat:@"%ld-%ld-%ld", (long)cell.position.x, (long)cell.position.y, (long)cell.tile.level]];
@@ -154,8 +151,7 @@
     return dataArray;
 }
 
-- (void)insertTileAtPosision:(M2Position)posision level:(NSInteger)level
-{
+- (void)insertTileAtPosision:(M2Position)posision level:(NSInteger)level {
     M2Cell *cell = [self cellAtPosition:posision];
     if (cell) {
         M2Tile *tile = [M2Tile insertNewTileToCell:cell level:level];

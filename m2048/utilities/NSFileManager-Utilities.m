@@ -9,31 +9,26 @@
 #import "NSFileManager-Utilities.h"
 
 
-NSString *NSDocumentsFolder()
-{
+NSString *NSDocumentsFolder() {
 	return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
 }
 
-NSString *NSLibraryFolder()
-{
+NSString *NSLibraryFolder() {
 	return [NSHomeDirectory() stringByAppendingPathComponent:@"Library"];
 }
 
-NSString *NSTmpFolder()
-{
+NSString *NSTmpFolder() {
 	return [NSHomeDirectory() stringByAppendingPathComponent:@"tmp"];
 }
 
-NSString *NSBundleFolder()
-{
+NSString *NSBundleFolder() {
 	return [[NSBundle mainBundle] bundlePath];
 }
 
 @implementation NSFileManager (Utilities)
 
 
-+ (NSArray *)filesInFolder:(NSString *)path
-{
++ (NSArray *)filesInFolder:(NSString *)path {
     NSURL *pathUrl = [NSURL fileURLWithPath:path];
     
 	NSURL *fileUrl = nil;
@@ -56,15 +51,13 @@ NSString *NSBundleFolder()
 	return results;
 }
 
-+ (BOOL)fileExist:(NSString *)path
-{
++ (BOOL)fileExist:(NSString *)path {
     BOOL isDirectory = NO;
     BOOL is = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
     return is && !isDirectory;
 }
 
-+ (BOOL)deleteFile:(NSString *)path
-{
++ (BOOL)deleteFile:(NSString *)path {
     NSError *error = nil;
     BOOL isSuccess = [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
     if (!isSuccess) {

@@ -499,10 +499,11 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         animationDuration = [keyboardInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
         
         if(notification.name == UIKeyboardWillShowNotification || notification.name == UIKeyboardDidShowNotification) {
-            if(ignoreOrientation || UIInterfaceOrientationIsPortrait(orientation))
+            if(ignoreOrientation || UIInterfaceOrientationIsPortrait(orientation)) {
                 keyboardHeight = CGRectGetHeight(keyboardFrame);
-            else
+            } else {
                 keyboardHeight = CGRectGetWidth(keyboardFrame);
+            }
         }
     } else {
         keyboardHeight = self.visibleKeyboardHeight;
@@ -682,12 +683,13 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
                          animations:^{
                              self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 1/1.3, 1/1.3);
                              
-                             if(self.isClear) // handle iOS 7 and 8 UIToolbar which not answers well to hierarchy opacity change
+                             if(self.isClear) {
+                                 // handle iOS 7 and 8 UIToolbar which not answers well to hierarchy opacity change
                                  self.hudView.alpha = 1;
-                             else
+                             } else {
                                  self.alpha = 1;
-                         }
-                         completion:^(BOOL finished){
+                             }
+                         } completion:^(BOOL finished){
                              [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDDidAppearNotification
                                                                                  object:nil
                                                                                userInfo:userInfo];
@@ -762,12 +764,13 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
                         options:UIViewAnimationCurveEaseIn | UIViewAnimationOptionAllowUserInteraction
                      animations:^{
                          self.hudView.transform = CGAffineTransformScale(self.hudView.transform, 0.8f, 0.8f);
-                         if(self.isClear) // handle iOS 7 UIToolbar not answer well to hierarchy opacity change
+                         if(self.isClear) {
+                             // handle iOS 7 UIToolbar not answer well to hierarchy opacity change
                              self.hudView.alpha = 0.0f;
-                         else
+                         } else {
                              self.alpha = 0.0f;
-                     }
-                     completion:^(BOOL finished){
+                         }
+                     } completion:^(BOOL finished){
                          if(self.alpha == 0.0f || self.hudView.alpha == 0.0f) {
                              self.alpha = 0.0f;
                              self.hudView.alpha = 0.0f;

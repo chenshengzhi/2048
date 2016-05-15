@@ -29,8 +29,7 @@ static NSMutableArray *_reusableTiles;
 
 # pragma mark - Tile creation
 
-+ (void)load
-{
++ (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _reusableTiles = [NSMutableArray array];
@@ -43,9 +42,7 @@ static NSMutableArray *_reusableTiles;
         tile = _reusableTiles.lastObject;
         [_reusableTiles removeLastObject];
         [tile prepareForReuse];
-    }
-    else
-    {
+    } else {
         tile = [[M2Tile alloc] init];
     }
     tile.name = NSStringFromClass([M2Tile class]);
@@ -60,8 +57,7 @@ static NSMutableArray *_reusableTiles;
     return tile;
 }
 
-+ (M2Tile *)insertNewTileToCell:(M2Cell *)cell level:(NSInteger)level
-{
++ (M2Tile *)insertNewTileToCell:(M2Cell *)cell level:(NSInteger)level {
     M2Tile *tile = [M2Tile insertNewTileToCell:cell];
     tile.level = level;
     [tile refreshValue];
@@ -92,18 +88,19 @@ static NSMutableArray *_reusableTiles;
     return self;
 }
 
-- (void)setupValue
-{
+- (void)setupValue {
     // For Fibonacci game, which is way harder than 2048 IMO, 40 seems to be the easiest number.
     // 90 definitely won't work, as we need approximately equal number of 2 and 3 to make the
     // game remotely makes sense.
-    if (GSTATE.gameType == M2GameTypeFibonacci) self.level = arc4random_uniform(100) < 40 ? 1 : 2;
-    else self.level = arc4random_uniform(100) < 95 ? 1 : 2;
+    if (GSTATE.gameType == M2GameTypeFibonacci) {
+        self.level = arc4random_uniform(100) < 40 ? 1 : 2;
+    } else {
+        self.level = arc4random_uniform(100) < 95 ? 1 : 2;
+    }
     [self refreshValue];
 }
 
-- (void)prepareForReuse
-{
+- (void)prepareForReuse {
     [self setScale:1];
     [_pendingActions removeAllObjects];
     _pendingBlock = nil;
@@ -121,8 +118,7 @@ static NSMutableArray *_reusableTiles;
 }
 
 
-- (BOOL)hasPendingMerge
-{
+- (BOOL)hasPendingMerge {
     // A move is only one action, so if there are more than one actions, there must be
     // a merge that needs to be committed. If things become more complicated, change
     // this to an explicit ivar or property.
@@ -219,8 +215,7 @@ static NSMutableArray *_reusableTiles;
 }
 
 
-- (void)removeAnimated:(BOOL)animated
-{
+- (void)removeAnimated:(BOOL)animated {
     if (animated) [_pendingActions addObject:[SKAction scaleTo:0 duration:GSTATE.animationDuration]];
     [_pendingActions addObject:[SKAction removeFromParent]];
     
@@ -241,18 +236,16 @@ static NSMutableArray *_reusableTiles;
     }];
 }
 
-- (void)clearForNewUnserInteraction
-{
-    // 移除的
+- (void)clearForNewUnserInteraction {
     if (_destRemove) {
+        // 移除的
         [self removeAllActions];
         [_pendingActions removeAllObjects];
         [self runAction:[SKAction removeFromParent] completion:^{
             [self removeFromParentCell];
         }];
-    }
-    // 移动的
-    else if (_pendingActions.count > 0 /* 移动的 */ || [self hasActions] /* 新增的 */) {
+    } else if (_pendingActions.count > 0 /* 移动的 */ || [self hasActions] /* 新增的 */) {
+        // 移动的
         [self removeAllActions];
         [_pendingActions removeAllObjects];
         
@@ -271,8 +264,7 @@ static NSMutableArray *_reusableTiles;
 }
 
 
-+ (void)clearForDimentionChange
-{
++ (void)clearForDimentionChange {
     if (_reusableTiles.count > 0) {
         [_reusableTiles removeAllObjects];
     }

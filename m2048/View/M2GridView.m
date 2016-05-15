@@ -11,8 +11,7 @@
 
 @implementation M2GridView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     self.backgroundColor = [GSTATE scoreBoardColor];
     self.layer.cornerRadius = GSTATE.cornerRadius;
@@ -22,16 +21,14 @@
 }
 
 
-- (instancetype)init
-{
+- (instancetype)init {
   NSInteger side = GSTATE.dimension * (GSTATE.tileSize + GSTATE.borderWidth) + GSTATE.borderWidth;
   CGFloat verticalOffset = [[UIScreen mainScreen] bounds].size.height - GSTATE.verticalOffset;
   return [self initWithFrame:CGRectMake(GSTATE.horizontalOffset, verticalOffset - side, side, side)];
 }
 
 
-+ (UIImage *)gridImageWithGrid:(M2Grid *)grid
-{
++ (UIImage *)gridImageWithGrid:(M2Grid *)grid {
   UIView *backgroundView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   backgroundView.backgroundColor = [GSTATE backgroundColor];
   
@@ -57,8 +54,7 @@
 }
 
 
-+ (UIImage *)gridImageWithOverlay
-{
++ (UIImage *)gridImageWithOverlay {
   UIView *backgroundView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   backgroundView.backgroundColor = [UIColor clearColor];
   backgroundView.opaque = NO;
@@ -71,8 +67,7 @@
 }
 
 
-+ (UIImage *)snapshotWithView:(UIView *)view
-{
++ (UIImage *)snapshotWithView:(UIView *)view {
   // This is a little hacky, but is probably the best generic way to do this.
   // [UIColor colorWithPatternImage] doesn't really work with SpriteKit, and we need
   // to take a retina-quality screenshot. But then in SpriteKit we need to shrink the

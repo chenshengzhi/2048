@@ -10,8 +10,7 @@
 
 @implementation M2ScoreView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     [self commonInit];
   }
@@ -19,8 +18,7 @@
 }
 
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
   if (self = [super initWithCoder:aDecoder]) {
     [self commonInit];
   }
@@ -28,16 +26,14 @@
 }
 
 
-- (void)commonInit
-{
+- (void)commonInit {
   self.layer.cornerRadius = GSTATE.cornerRadius;
   self.layer.masksToBounds = YES;
   self.backgroundColor = [UIColor greenColor];
 }
 
 
-- (void)updateAppearance
-{
+- (void)updateAppearance {
   self.backgroundColor = [GSTATE scoreBoardColor];
   self.title.font = [UIFont fontWithName:[GSTATE boldFontName] size:12];
   self.score.font = [UIFont fontWithName:[GSTATE regularFontName] size:16];

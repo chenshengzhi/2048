@@ -31,8 +31,7 @@
     NSString *_bestScoreKey;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [self updateState];
@@ -64,24 +63,21 @@
     _scene.controller = self;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     _bestScoreKey = nil;
 }
 
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     ((SKView *)self.view).paused = NO;
 }
 
 
-- (void)updateState
-{
+- (void)updateState {
     [_scoreView updateAppearance];
     [_bestView updateAppearance];
     
@@ -119,8 +115,7 @@
 }
 
 
-- (void)updateScore:(NSInteger)score
-{
+- (void)updateScore:(NSInteger)score {
     _scoreView.score.text = [NSString stringWithFormat:@"%ld", (long)score];
     
     if (!_bestScoreKey) {
@@ -134,29 +129,25 @@
 }
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Pause Sprite Kit. Otherwise the dismissal of the modal view would lag.
     ((SKView *)self.view).paused = YES;
 }
 
 
-- (IBAction)restart:(id)sender
-{
+- (IBAction)restart:(id)sender {
     [self hideOverlay];
     [self updateScore:0];
     [_scene startNewGame];
 }
 
 
-- (IBAction)keepPlaying:(id)sender
-{
+- (IBAction)keepPlaying:(id)sender {
     [self hideOverlay];
 }
 
 
-- (IBAction)done:(UIStoryboardSegue *)segue
-{
+- (IBAction)done:(UIStoryboardSegue *)segue {
     ((SKView *)self.view).paused = NO;
     if (GSTATE.needRefresh) {
         [GSTATE loadGlobalState];
@@ -167,8 +158,7 @@
 }
 
 
-- (void)endGame:(BOOL)won
-{
+- (void)endGame:(BOOL)won {
     _overlay.hidden = NO;
     _overlay.alpha = 0;
     _overlayBackground.hidden = NO;
@@ -203,8 +193,7 @@
 }
 
 
-- (void)hideOverlay
-{
+- (void)hideOverlay {
     ((SKView *)self.view).paused = NO;
     if (!_overlay.hidden) {
         [UIView animateWithDuration:0.25 animations:^{

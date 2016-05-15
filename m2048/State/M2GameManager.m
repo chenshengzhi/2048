@@ -47,8 +47,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 }
 
 
-+ (instancetype)manager
-{
++ (instancetype)manager {
     static M2GameManager *manager;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -57,8 +56,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     return manager;
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillTerminateNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -72,10 +70,8 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 
 # pragma mark - Setup
 
-- (void)startNewSessionWithScene:(M2Scene *)scene
-{
-    if (!_grid || _grid.dimension != GSTATE.dimension)
-    {
+- (void)startNewSessionWithScene:(M2Scene *)scene {
+    if (!_grid || _grid.dimension != GSTATE.dimension) {
         [_grid.scene enumerateChildNodesWithName:NSStringFromClass([M2Tile class]) usingBlock:^(SKNode *node, BOOL *stop) {
             M2Tile *tile = (M2Tile *)node;
             [tile removeFromParent];
@@ -83,9 +79,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
         
         _grid = [[M2Grid alloc] initWithDimension:GSTATE.dimension];
         _grid.scene = scene;
-    }
-    else
-    {
+    } else {
         [_grid removeAllTilesAnimated:NO];
     }
     
@@ -100,21 +94,16 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 }
 
 
-- (void)addTwoRandomTiles
-{
+- (void)addTwoRandomTiles {
     // If the scene only has one child (the board), we can proceed with adding new tiles
     // since all old ones are removed. After adding new tiles, remove the displaylink.
     
     M2StateModel *model = [M2StateModel archiveFromDefaultFile];
-    if (model)
-    {
+    if (model) {
         [M2StateModel clearDefaultFile];
         [self loadFromArchive:model];
-    }
-    else
-    {
-        if (_grid.scene.children.count <= 1)
-        {
+    } else {
+        if (_grid.scene.children.count <= 1) {
             [_grid insertTileAtRandomAvailablePositionWithDelay:NO];
             [_grid insertTileAtRandomAvailablePositionWithDelay:NO];
             [_addTileDisplayLink invalidate];
@@ -125,8 +114,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 
 # pragma mark - Actions
 
-- (void)moveToDirection:(M2Direction)direction
-{
+- (void)moveToDirection:(M2Direction)direction {
     __block M2Tile *tile = nil;
     
     __block BOOL hasMovement = NO;
@@ -144,11 +132,11 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 for (NSInteger i = position.x + unit; iterate(i, reverse, _grid.dimension, -1); i += unit) {
                     M2Tile *t = [_grid tileAtPosition:M2PositionMake(i, position.y)];
                     
-                    // Empty cell; we can move at least to here.
-                    if (!t) target = i;
-                    
-                    // Try to merge to the tile in the cell.
-                    else {
+                    if (!t) {
+                        // Empty cell; we can move at least to here.
+                        target = i;
+                    } else {
+                        // Try to merge to the tile in the cell.
                         NSInteger level = 0;
                         
                         if (GSTATE.gameType == M2GameTypePowerOf3) {
@@ -179,9 +167,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 }
             }
         } reverseOrder:reverse];
-    }
-    
-    else {
+    } else {
         [_grid forEach:^(M2Position position) {
             if ((tile = [_grid tileAtPosition:position])) {
                 BOOL pending = NO;
@@ -189,9 +175,9 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
                 for (NSInteger i = position.y + unit; iterate(i, reverse, _grid.dimension, -1); i += unit) {
                     M2Tile *t = [_grid tileAtPosition:M2PositionMake(position.x, i)];
                     
-                    if (!t) target = i;
-                    
-                    else {
+                    if (!t) {
+                        target = i;
+                    } else {
                         NSInteger level = 0;
                         
                         if (GSTATE.gameType == M2GameTypePowerOf3) {
@@ -264,8 +250,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 
 # pragma mark - Score
 
-- (void)materializePendingScore
-{
+- (void)materializePendingScore {
     _score += _pendingScore;
     _pendingScore = 0;
     [_grid.scene.controller updateScore:_score];
@@ -283,8 +268,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
  *
  * @return YES if there are moves available.
  */
-- (BOOL)movesAvailable
-{
+- (BOOL)movesAvailable {
     return [_grid hasAvailableCells] || [self adjacentMatchesAvailable];
 }
 
@@ -298,8 +282,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
  *
  * @return YES if there are adjacent matches available.
  */
-- (BOOL)adjacentMatchesAvailable
-{
+- (BOOL)adjacentMatchesAvailable {
     for (NSInteger i = 0; i < _grid.dimension; i++) {
         for (NSInteger j = 0; j < _grid.dimension; j++) {
             // Due to symmetry, we only need to check for tiles to the right and down.
@@ -334,8 +317,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 
 #pragma mark - archives -
 
-- (BOOL)saveCurrentState
-{
+- (BOOL)saveCurrentState {
     M2StateModel *model = [[M2StateModel alloc] init];
     model.gameType = GSTATE.gameType;
     model.dimension = GSTATE.dimension;
@@ -346,8 +328,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     return [model archive];
 }
 
-- (BOOL)saveCurrentStateForTerminate
-{
+- (BOOL)saveCurrentStateForTerminate {
     M2StateModel *model = [[M2StateModel alloc] init];
     model.gameType = GSTATE.gameType;
     model.dimension = GSTATE.dimension;
@@ -358,14 +339,12 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     return [model archiveToDefaultFile];
 }
 
-- (BOOL)loadFromArchive:(M2StateModel *)model
-{
+- (BOOL)loadFromArchive:(M2StateModel *)model {
     [Settings setInteger:model.gameType forKey:@"Game Type"];
     [Settings setInteger:model.dimension-3 forKey:@"Board Size"];
     [GSTATE loadGlobalState];
     
-    if (!_grid || _grid.dimension != GSTATE.dimension)
-    {
+    if (!_grid || _grid.dimension != GSTATE.dimension) {
         [_grid.scene enumerateChildNodesWithName:NSStringFromClass([M2Tile class]) usingBlock:^(SKNode *node, BOOL *stop) {
             M2Tile *tile = (M2Tile *)node;
             [tile removeFromParent];
@@ -374,9 +353,7 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
         M2Grid *newGrid = [[M2Grid alloc] initWithDimension:GSTATE.dimension];
         newGrid.scene = _grid.scene;
         _grid = newGrid;
-    }
-    else
-    {
+    } else {
         [_grid removeAllTilesAnimated:YES];
     }
     
