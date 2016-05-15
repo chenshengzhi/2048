@@ -44,6 +44,8 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     
     /** The display link to add tiles after removing all existing tiles. */
     CADisplayLink *_addTileDisplayLink;
+    
+    NSInteger _backupScore;
 }
 
 
@@ -115,6 +117,9 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
 # pragma mark - Actions
 
 - (void)moveToDirection:(M2Direction)direction {
+    _backupScore = _score;
+    [_grid backupForStepBack];
+    
     __block M2Tile *tile = nil;
     
     __block BOOL hasMovement = NO;
@@ -377,6 +382,14 @@ BOOL iterate(NSInteger value, BOOL countUp, NSInteger upper, NSInteger lower) {
     }];
     
     return YES;
+}
+
+#pragma mark - setp back -
+- (void)stepBack {
+    if (_score > 0) {
+        [_grid.scene.controller updateScore:_backupScore];
+        [_grid stepBack];
+    }
 }
 
 @end

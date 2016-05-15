@@ -94,7 +94,7 @@
 # pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 
@@ -105,6 +105,8 @@
         case 1:
             return _archives.count;
         case 2:
+            return 1;
+        case 3:
             return 1;
         default:
             return 0;
@@ -122,6 +124,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Settings Cell"];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (indexPath.section == 0) {
         cell.textLabel.text = [_titles objectAtIndex:indexPath.row];
         
@@ -134,6 +137,10 @@
         cell.detailTextLabel.text = @"";
     } else if (indexPath.section == 2) {
         cell.textLabel.text = M2LocalizedString(@"About2048");
+        cell.detailTextLabel.text = @"";
+    } else if (indexPath.section == 3) {
+        cell.textLabel.text = M2LocalizedString(@"SetpBack");
+        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = @"";
     }
     return cell;
@@ -158,6 +165,10 @@
         }
     } else if (indexPath.section == 2) {
         [self performSegueWithIdentifier:@"About Segue" sender:nil];
+    } else if (indexPath.section == 3) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[M2GameManager manager] stepBack];
+        }];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

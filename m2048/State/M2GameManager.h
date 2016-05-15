@@ -47,4 +47,7 @@ typedef NS_ENUM(NSInteger, M2Direction) {
 - (BOOL)loadFromArchive:(M2StateModel *)model;
 
 
+#pragma mark - setp back -
+- (void)stepBack;
+
 @end

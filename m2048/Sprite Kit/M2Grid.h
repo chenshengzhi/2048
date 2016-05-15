@@ -88,4 +88,10 @@ typedef void (^IteratorBlock)(M2Position);
 
 - (void)insertTileAtPosision:(M2Position)posision level:(NSInteger)level;
 
+
+#pragma mark - step back -
+- (void)backupForStepBack;
+
+- (void)stepBack;
+
 @end

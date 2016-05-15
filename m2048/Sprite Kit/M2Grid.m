@@ -21,12 +21,14 @@
 @implementation M2Grid {
     /* The 2-D grid that keeps track of all cells and tiles. */
     NSMutableArray *_grid;
+    NSMutableArray *_backupGrid;
 }
 
 - (instancetype)initWithDimension:(NSInteger)dimension {
     if (self = [super init]) {
         // Set up the grid with all empty cells.
         _grid = [[NSMutableArray alloc] initWithCapacity:dimension];
+        _backupGrid = [[NSMutableArray alloc] initWithCapacity:dimension];
         
         for (NSInteger i = 0; i < dimension; i++) {
             NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:dimension];
@@ -34,6 +36,12 @@
                 [array addObject:[[M2Cell alloc] initWithPosition:M2PositionMake(i, j)]];
             }
             [_grid addObject:array];
+            
+            NSMutableArray *backupAraay = [[NSMutableArray alloc] initWithCapacity:dimension];
+            for (NSInteger j = 0; j < dimension; j++) {
+                [backupAraay addObject:[NSNull null]];
+            }
+            [_backupGrid addObject:backupAraay];
         }
         
         // Record the dimension of the grid.
@@ -162,4 +170,34 @@
         [tile runAction:[SKAction group:@[move, scale]]];
     }
 }
+
+#pragma mark - step back -
+- (void)backupForStepBack {
+    [self forEach:^(M2Position pos) {
+        _backupGrid[pos.x][pos.y] = [NSNull null];
+    } reverseOrder:NO];
+    
+    [self forEach:^(M2Position pos) {
+        M2Cell *cell = [self cellAtPosition:pos];
+        if (cell.tile) {
+            NSDictionary *dict = @{@"x": @(pos.x), @"y": @(pos.y), @"level": @(cell.tile.level)};
+            _backupGrid[pos.x][pos.y] = dict;
+        }
+    } reverseOrder:NO];
+}
+
+- (void)stepBack {
+    [self removeAllTilesAnimated:YES];
+    
+    [self forEach:^(M2Position pos) {
+        id obj = _backupGrid[pos.x][pos.y];
+        if (obj != [NSNull null]) {
+            NSInteger x = [obj[@"x"] integerValue];
+            NSInteger y = [obj[@"y"] integerValue];
+            NSInteger level = [obj[@"level"] integerValue];
+            [self insertTileAtPosision:M2PositionMake(x, y) level:level];
+        }
+    } reverseOrder:NO];
+}
+
 @end
